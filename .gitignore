@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Private Database File
+# IMPORTANT: Do not upload the pos.db file if you have actual customer/product data in it!
+pos.db
+pos.db-journal
+
+# Build Output
+dist/
+build/
+*.exe
+*.zip
+
+# Playwright Test Files
+test-ui.spec.js
+test-results/
+playwright-report/
+
+# Env
+.env

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline POS</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="app-container">
+    <nav class="sidebar">
+      <div class="logo">
+        <h2>Offline POS</h2>
+      </div>
+      <ul class="nav-links">
+        <li class="active" data-view="checkout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          Checkout
+        </li>
+        <li data-view="products">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+            </path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          Products
+        </li>
+        <li data-view="customers">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Customers
+        </li>
+        <li data-view="transactions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          History
+        </li>
+      </ul>
+    </nav>
+
+    <main class="content">
+
+      <section id="checkout-view" class="view active">
+        <header class="view-header">
+          <h1>Checkout</h1>
+          <div class="customer-selector" style="position: relative;">
+            <input type="text" id="checkout-customer-input" list="checkout-customers-list"
+              placeholder="Search Customer..." onfocus="this.value=''" autocomplete="off" style="width: 250px;">
+            <datalist id="checkout-customers-list">
+              <!-- Populate dynamically -->
+            </datalist>
+            <div id="customer-info" class="hidden">
+              <span class="label">Balance:</span>
+              <span id="customer-balance" class="value">$0.00</span>
+              <span class="label">Limit:</span>
+              <span id="customer-limit" class="value">-$3000.00</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="checkout-grid">
+          <div class="quick-items-container section-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+              <h3 style="margin:0;">Quick Items</h3>
+              <input type="text" id="quick-items-search" placeholder="Search quick items..."
+                style="max-width: 150px; padding: 6px 10px; font-size: 13px;">
+            </div>
+            <div id="quick-items-categories" class="quick-items-categories">
+
+            </div>
+            <div class="quick-items-grid" id="quick-items-grid">
+
+            </div>
+          </div>
+
+          <div class="cart-container section-card" style="display:flex; flex-direction:column;">
+            <div
+              style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 12px; gap:8px;">
+              <div id="parked-carts-container" style="display:flex; flex-wrap:wrap; gap:8px; flex:1;">
+
+              </div>
+              <button id="btn-clear-cart" class="btn btn-danger btn-sm" style="flex-shrink:0;"
+                title="Discard all items and customer selection">Clear</button>
+              <button id="btn-hold-cart" class="btn btn-secondary btn-sm" style="flex-shrink:0;">Pause / Hold</button>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width: 35%;">Item</th>
+                  <th style="width: 15%;">Price</th>
+                  <th style="width: 20%; text-align: center;">Qty</th>
+                  <th style="width: 15%; text-align: right;">Total</th>
+                  <th style="width: 15%; text-align: center;">Remove</th>
+                </tr>
+              </thead>
+              <tbody id="cart-items">
+                <!-- JS populated -->
+              </tbody>
+            </table>
+            <div class="cart-empty-state" id="cart-empty">
+              <p>Scan a barcode or add an item to begin.</p>
+            </div>
+          </div>
+
+          <div class="summary-container section-card">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="summary-subtotal">$0.00</span>
+            </div>
+            <div class="summary-row" style="font-size: 14px; align-items:center;">
+              <span style="color:var(--text-muted); cursor:pointer;" id="btn-toggle-discount">+ Add Discount</span>
+              <div id="discount-inputs" class="hidden" style="display:flex; gap:6px;">
+                <input type="number" id="discount-val" placeholder="0" style="width: 70px; padding: 4px;" min="0"
+                  step="0.01">
+                <select id="discount-type" style="padding: 4px;">
+                  <option value="%">%</option>
+                  <option value="$">$</option>
+                </select>
+              </div>
+              <span id="summary-discount" class="hidden" style="color:var(--accent-success);">-$0.00</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="summary-total">$0.00</span>
+            </div>
+
+            <button id="btn-checkout" class="btn btn-primary btn-large">Complete Sale</button>
+            <div id="checkout-error" class="error-msg hidden"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="products-view" class="view">
+        <header class="view-header">
+          <h1>Products</h1>
+          <div style="display:flex; gap:10px;">
+            <button id="btn-show-add-product" class="btn btn-primary">+ New Product</button>
+            <button id="btn-import-products" class="btn btn-success">Import Excel</button>
+          </div>
+        </header>
+
+        <div class="section-card">
+          <div id="add-product-form" class="hidden form-container">
+            <div style="display:flex; flex-direction:column; gap:8px; width: 100%;">
+              <h2 id="product-form-title">Add Product</h2>
+              <input type="hidden" id="prod-id">
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" id="prod-barcode" placeholder="Barcode (Leave empty for Quick Item)"
+                  onfocus="this.select()" style="flex: 1; margin: 0;">
+              </div>
+              <input type="text" id="prod-name" placeholder="Product Name">
+              <input type="number" id="prod-price" placeholder="Price" step="0.01">
+              <input type="text" id="prod-category" placeholder="Category (e.g. Hot Drinks)">
+              <div style="display:flex; gap:10px;">
+                <button id="btn-add-product" class="btn btn-success">Save</button>
+                <button id="btn-cancel-product" class="btn btn-secondary">Cancel</button>
+              </div>
+              <div id="prod-error" class="error-msg hidden" style="margin-top: 5px;"></div>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th class="table-actions">Action</th>
+              </tr>
+            </thead>
+            <tbody id="products-list">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="customers-view" class="view">
+        <header class="view-header">
+          <h1>Customers</h1>
+          <div style="display:flex; gap:10px;">
+            <button id="btn-show-add-customer" class="btn btn-primary">+ New Customer</button>
+            <button id="btn-import-customers" class="btn btn-success">Import Excel</button>
+            <button id="btn-export-all-customers" class="btn btn-secondary"
+              style="background-color: var(--accent-primary);">Export All</button>
+          </div>
+        </header>
+
+        <div class="section-card">
+          <div id="add-customer-form" class="hidden form-container">
+            <div style="display:flex; flex-direction:column; gap:8px; width: 100%;">
+              <h2 id="customer-form-title">Add Customer</h2>
+              <input type="hidden" id="cust-id">
+              <input type="text" id="cust-name" placeholder="Customer Name">
+              <input type="number" id="cust-balance" placeholder="Starting Balance" step="0.01" value="0">
+              <input type="number" id="cust-limit" placeholder="Credit Limit (Negative)" step="0.01" value="-3000">
+              <div style="display:flex; gap:10px;">
+                <button id="btn-add-customer" class="btn btn-success">Save</button>
+                <button id="btn-cancel-customer" class="btn btn-secondary">Cancel</button>
+              </div>
+              <div id="cust-error" class="error-msg hidden" style="margin-top: 5px;"></div>
+            </div>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Balance</th>
+                <th>Credit Limit</th>
+                <th class="table-actions">Action</th>
+              </tr>
+            </thead>
+            <tbody id="customers-list">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="transactions-view" class="view">
+        <header class="view-header">
+          <h1>Transactions</h1>
+          <input type="text" id="transaction-search" placeholder="Search by customer name..." style="min-width: 300px;">
+        </header>
+
+        <div class="section-card">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>Type</th>
+                <th>Total</th>
+                <th class="table-actions">Action</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-list">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="app-modal" class="hidden"
+    style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; display:flex; align-items:center; justify-content:center;">
+    <div class="section-card" style="width: 400px; text-align:center; padding: 24px;">
+      <h3 id="app-modal-title" style="margin-bottom:16px;">Message</h3>
+      <div id="app-modal-message" style="margin-bottom:16px; color:var(--text-muted);"></div>
+      <input type="text" id="app-modal-input" class="hidden" style="width:100%; margin-bottom:16px; text-align:center;">
+      <div style="display:flex; justify-content:center; gap:12px;">
+        <button id="btn-modal-cancel" class="btn btn-secondary hidden">Cancel</button>
+        <button id="btn-modal-ok" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>

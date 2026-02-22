@@ -1,0 +1,53 @@
+{
+  "name": "offline-pos",
+  "version": "1.0.0",
+  "description": "Offline POS system using Electron and SQLite",
+  "main": "main.js",
+  "author": {
+    "name": "Offline POS",
+    "email": "support@offlinepos.local"
+  },
+  "scripts": {
+    "start": "node -e \"delete process.env.ELECTRON_RUN_AS_NODE; const { spawn } = require('child_process'); const p = spawn(process.platform==='win32'?'electron.cmd':'electron', ['.'], {stdio:'inherit', shell:true}); p.on('exit', c => process.exit(c));\"",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.offline.pos",
+    "productName": "Offline POS",
+    "copyright": "Copyright © 2026 Offline POS",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!**/*.spec.js",
+      "!node_modules/playwright{,/**/*}",
+      "!node_modules/@playwright{,/**/*}"
+    ]
+  },
+  "dependencies": {
+    "jimp": "^0.22.10",
+    "png-to-ico": "^3.0.1",
+    "rcedit": "^5.0.2",
+    "sqlite3": "^5.1.7",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "cross-env": "^10.1.0",
+    "electron": "^34.1.0",
+    "electron-builder": "^26.8.1",
+    "electron-winstaller": "^5.4.0",
+    "playwright": "^1.58.2"
+  }
+}
