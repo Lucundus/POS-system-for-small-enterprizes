@@ -25,11 +25,18 @@ Choose your operating system below to download the latest version of Offline POS
 - 🐧 **[Download for Linux (.AppImage)](https://github.com/Lucundus/offline-pos/releases/latest)**
 
 ### How to Run:
-- **Windows:** Just double-click the downloaded `.exe` setup file to install. *(If Windows shows a "Windows protected your PC" popup, click **More info** -> **Run anyway**).*
+- **Windows:** Just double-click the downloaded `.exe` setup file to install.*
 - **Mac:** Open the downloaded `.dmg` file and drag the "Offline POS" app into your Applications folder.
 - **Linux:** Right-click the `.AppImage` file, go to Properties -> Permissions, allow executing file as program, and run it.
 
 All your data is saved completely offline and locally on your machine! No installation required for data storage.
+
+## Contact
+
+For inquiries regarding custom software development, feature requests, or any other projects, please feel free to reach out. 
+
+You can contact me directly via Instagram:
+[**@lucundus**](https://www.instagram.com/lucundus/)
 
 ## Contributing
 Contributions are absolutely welcome! If you see something that can be improved, or want to add feature support for other hardware (like receipt printers or cash drawers), please open an issue or submit a Pull Request.
