@@ -16,14 +16,20 @@ This project aims to help small businesses, coffee shops, and independent retail
 - **📊 Excel Import/Export:** Import thousands of products instantly via `.xlsx` or `.csv`. Export your customer balances simply.
 - **📱 Hardware Scanner Ready:** Seamlessly integrates with USB or Bluetooth Barcode scanners. Unrecognized barcodes automatically pop up the "Add Product" form and pre-fill the barcode so you can catalog items while checking people out.
 
-## Download & Run
+## Download & Install
 
-This application is completely portable. There is no installation required!
+Choose your operating system below to download the latest version of Offline POS:
 
-1. Download the latest `Offline-POS-Portable.zip` from the repository (or the Releases tab).
-2. Extract the ZIP folder anywhere on your computer (like your Desktop or Documents folder).
-3. Open the folder and double-click the **Offline POS.exe** file.
-4. The system will start instantly and keep all of your data safely saved right next to the application inside an `appData` folder.
+- 🪟 **[Download for Windows (.exe)](https://github.com/Lucundus/offline-pos/releases/latest)** *(Recommended)*
+- 🍎 **[Download for macOS (.dmg)](https://github.com/Lucundus/offline-pos/releases/latest)**
+- 🐧 **[Download for Linux (.AppImage)](https://github.com/Lucundus/offline-pos/releases/latest)**
+
+### How to Run:
+- **Windows:** Just double-click the downloaded `.exe` setup file to install. *(If Windows shows a "Windows protected your PC" popup, click **More info** -> **Run anyway**).*
+- **Mac:** Open the downloaded `.dmg` file and drag the "Offline POS" app into your Applications folder.
+- **Linux:** Right-click the `.AppImage` file, go to Properties -> Permissions, allow executing file as program, and run it.
+
+All your data is saved completely offline and locally on your machine! No installation required for data storage.
 
 ## Contributing
 Contributions are absolutely welcome! If you see something that can be improved, or want to add feature support for other hardware (like receipt printers or cash drawers), please open an issue or submit a Pull Request.
