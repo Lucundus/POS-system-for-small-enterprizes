@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +7,7 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
   <div class="app-container">
     <nav class="sidebar">
       <div class="logo">
@@ -61,9 +58,7 @@
         </li>
       </ul>
     </nav>
-
     <main class="content">
-
       <section id="checkout-view" class="view active">
         <header class="view-header">
           <h1>Checkout</h1>
@@ -71,7 +66,6 @@
             <input type="text" id="checkout-customer-input" list="checkout-customers-list"
               placeholder="Search Customer..." onfocus="this.value=''" autocomplete="off" style="width: 250px;">
             <datalist id="checkout-customers-list">
-              <!-- Populate dynamically -->
             </datalist>
             <div id="customer-info" class="hidden">
               <span class="label">Balance:</span>
@@ -81,7 +75,6 @@
             </div>
           </div>
         </header>
-
         <div class="checkout-grid">
           <div class="quick-items-container section-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
@@ -90,18 +83,14 @@
                 style="max-width: 150px; padding: 6px 10px; font-size: 13px;">
             </div>
             <div id="quick-items-categories" class="quick-items-categories">
-
             </div>
             <div class="quick-items-grid" id="quick-items-grid">
-
             </div>
           </div>
-
           <div class="cart-container section-card" style="display:flex; flex-direction:column;">
             <div
               style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 12px; gap:8px;">
               <div id="parked-carts-container" style="display:flex; flex-wrap:wrap; gap:8px; flex:1;">
-
               </div>
               <button id="btn-clear-cart" class="btn btn-danger btn-sm" style="flex-shrink:0;"
                 title="Discard all items and customer selection">Clear</button>
@@ -118,14 +107,12 @@
                 </tr>
               </thead>
               <tbody id="cart-items">
-                <!-- JS populated -->
               </tbody>
             </table>
             <div class="cart-empty-state" id="cart-empty">
               <p>Scan a barcode or add an item to begin.</p>
             </div>
           </div>
-
           <div class="summary-container section-card">
             <h3>Order Summary</h3>
             <div class="summary-row">
@@ -148,13 +135,11 @@
               <span>Total</span>
               <span id="summary-total">$0.00</span>
             </div>
-
             <button id="btn-checkout" class="btn btn-primary btn-large">Complete Sale</button>
             <div id="checkout-error" class="error-msg hidden"></div>
           </div>
         </div>
       </section>
-
       <section id="products-view" class="view">
         <header class="view-header">
           <h1>Products</h1>
@@ -163,7 +148,6 @@
             <button id="btn-import-products" class="btn btn-success">Import Excel</button>
           </div>
         </header>
-
         <div class="section-card">
           <div id="add-product-form" class="hidden form-container">
             <div style="display:flex; flex-direction:column; gap:8px; width: 100%;">
@@ -183,7 +167,6 @@
               <div id="prod-error" class="error-msg hidden" style="margin-top: 5px;"></div>
             </div>
           </div>
-
           <table class="data-table">
             <thead>
               <tr>
@@ -198,7 +181,6 @@
           </table>
         </div>
       </section>
-
       <section id="customers-view" class="view">
         <header class="view-header">
           <h1>Customers</h1>
@@ -209,7 +191,6 @@
               style="background-color: var(--accent-primary);">Export All</button>
           </div>
         </header>
-
         <div class="section-card">
           <div id="add-customer-form" class="hidden form-container">
             <div style="display:flex; flex-direction:column; gap:8px; width: 100%;">
@@ -225,7 +206,6 @@
               <div id="cust-error" class="error-msg hidden" style="margin-top: 5px;"></div>
             </div>
           </div>
-
           <table class="data-table">
             <thead>
               <tr>
@@ -240,13 +220,11 @@
           </table>
         </div>
       </section>
-
       <section id="transactions-view" class="view">
         <header class="view-header">
           <h1>Transactions</h1>
           <input type="text" id="transaction-search" placeholder="Search by customer name..." style="min-width: 300px;">
         </header>
-
         <div class="section-card">
           <table class="data-table">
             <thead>
@@ -263,10 +241,8 @@
           </table>
         </div>
       </section>
-
     </main>
   </div>
-
   <div id="app-modal" class="hidden"
     style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; display:flex; align-items:center; justify-content:center;">
     <div class="section-card" style="width: 400px; text-align:center; padding: 24px;">
@@ -279,8 +255,6 @@
       </div>
     </div>
   </div>
-
   <script src="renderer.js"></script>
 </body>
-
 </html>

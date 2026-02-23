@@ -2,11 +2,8 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const { app } = require('electron');
 const fs = require('fs');
-
 class Database {
     constructor() {
-        // In production, __dirname points to a read-only app.asar archive.
-        // We must store pos.db in a writable directory like AppData/Roaming/offline-pos
         let dbPath;
         if (app.isPackaged) {
             const userDataPath = app.getPath('userData');
@@ -17,26 +14,20 @@ class Database {
         } else {
             dbPath = path.join(__dirname, 'pos.db');
         }
-
-        // Optional: If production DB doesn't exist, we can try to copy from local if we packaged it,
-        // but it's not strictly necessary. It will just start fresh.
         console.log("Database Path:", dbPath);
-
         this.db = new sqlite3.Database(dbPath, (err) => {
             if (err) {
                 console.error('Database connection error:', err.message);
             } else {
                 console.log('Connected to SQLite database.');
-                this.init(); // Call the new init method
+                this.init(); 
             }
         });
     }
-
     init() {
         return new Promise((resolve, reject) => {
             this.db.serialize(() => {
                 const db = this.db;
-
                 db.run(`
                     CREATE TABLE IF NOT EXISTS Customers (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,7 +36,6 @@ class Database {
                         CreditLimit DECIMAL(10,2) DEFAULT -3000
                     )
                 `);
-
                 db.run(`
                     CREATE TABLE IF NOT EXISTS Products (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -55,7 +45,6 @@ class Database {
                         Category TEXT DEFAULT 'General'
                     )
                 `);
-
                 db.run(`
                     CREATE TABLE IF NOT EXISTS Transactions (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,7 +55,6 @@ class Database {
                         FOREIGN KEY(CustomerId) REFERENCES Customers(Id)
                     )
                 `);
-
                 db.run(`
                     CREATE TABLE IF NOT EXISTS TransactionItems (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,7 +70,6 @@ class Database {
                         console.error('Error creating database tables', err);
                         reject(err);
                     } else {
-                        // Migration Check: Add Category to Products if it doesn't exist
                         db.all("PRAGMA table_info(Products)", (pragmaErr, rows) => {
                             if (!pragmaErr && rows) {
                                 const hasCategory = rows.some(r => r.name === 'Category');
@@ -97,7 +84,7 @@ class Database {
                                 }
                             } else {
                                 console.error("Error checking Products table info:", pragmaErr);
-                                resolve(); // Resolve even on error to not block startup
+                                resolve(); 
                             }
                         });
                     }
@@ -105,8 +92,6 @@ class Database {
             });
         });
     }
-
-    // Helper method to wrap run in Promise
     run(sql, params = []) {
         return new Promise((resolve, reject) => {
             this.db.run(sql, params, function (err) {
@@ -115,8 +100,6 @@ class Database {
             });
         });
     }
-
-    // Helper method to wrap get in Promise
     get(sql, params = []) {
         return new Promise((resolve, reject) => {
             this.db.get(sql, params, (err, row) => {
@@ -125,8 +108,6 @@ class Database {
             });
         });
     }
-
-    // Helper method to wrap all in Promise
     all(sql, params = []) {
         return new Promise((resolve, reject) => {
             this.db.all(sql, params, (err, rows) => {
@@ -136,5 +117,4 @@ class Database {
         });
     }
 }
-
 module.exports = new Database();
