@@ -23,8 +23,7 @@
       "target": [
         "dmg",
         "zip"
-      ],
-      "icon": "icon.png"
+      ]
     },
     "linux": {
       "target": [
