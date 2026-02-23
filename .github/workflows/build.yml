@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
     
     strategy:
       matrix:
@@ -34,14 +36,14 @@ jobs:
       # Build the application
       - name: Build Mac
         if: matrix.os == 'macos-latest'
-        run: npm run build -- --mac
+        run: npm run build -- --mac -p never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Build Linux
         if: matrix.os == 'ubuntu-latest'
-        run: npm run build -- --linux
+        run: npm run build -- --linux -p never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -49,7 +51,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           npm install rcedit
-          npm run build -- --win
+          npm run build -- --win -p never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,6 +72,8 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     if: startsWith(github.ref, 'refs/tags/v')
     
     steps:
